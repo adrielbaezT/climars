@@ -3,7 +3,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import {COLORS, SIZES} from '../../constants/theme';
-import LoginReactForm from '../../features/authentication/login/LoginReactForm';
+import LoginForm from '../../features/authentication/login/LoginForm';
 import {RootStackParamList} from '../../navigation/StackNavigator';
 
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
@@ -19,8 +19,7 @@ export const Login = () => {
         }}>
         <Text style={styles.title}>Login</Text>
       </View>
-      {/* <LoginForm /> */}
-      <LoginReactForm />
+      <LoginForm />
       <View>
         <View style={[styles.center, {marginTop: 50}]}>
           <View style={styles.separator} />
