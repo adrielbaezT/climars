@@ -3,7 +3,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import {COLORS, SIZES} from '../../constants/theme';
-import {LoginForm} from '../../features';
+import LoginReactForm from '../../features/authentication/login/LoginReactForm';
 import {RootStackParamList} from '../../navigation/StackNavigator';
 
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
@@ -19,7 +19,8 @@ export const Login = () => {
         }}>
         <Text style={styles.title}>Login</Text>
       </View>
-      <LoginForm />
+      {/* <LoginForm /> */}
+      <LoginReactForm />
       <View>
         <View style={[styles.center, {marginTop: 50}]}>
           <View style={styles.separator} />
@@ -36,7 +37,7 @@ export const Login = () => {
         <View style={[styles.center, {marginTop: 20}]}>
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() => console.log('pressed login with google')}>
+            onPress={() => navigate('Home')}>
             <Image source={require('../../assets/img/google.png')} />
           </TouchableOpacity>
         </View>

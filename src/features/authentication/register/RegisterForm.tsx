@@ -7,10 +7,8 @@ import {
   Image,
   ActivityIndicator,
   Alert,
-  Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {isLoggedVar} from '../../../../graphql/cache';
 import {FormInput} from '../../../components';
 import {COLORS, SIZES} from '../../../constants/theme';
 
@@ -34,15 +32,9 @@ export const RegisterForm = () => {
       `firstName: ${firstName} lastName: ${lastName} Email: ${email} Password: ${password}`,
     );
   };
-  console.log(isLoggedVar());
 
   return (
     <>
-      <Button
-        title="Go to Register"
-        onPress={() => isLoggedVar(!isLoggedVar())}
-      />
-      {isLoggedVar() ? <Text>True</Text> : <Text>False</Text>}
       <FormInput
         inputStyle={styles.input}
         label="First Name"

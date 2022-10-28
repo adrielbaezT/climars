@@ -2,17 +2,26 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {HomeScreen, MapScreen, NewsScreen, ProfileScreen} from '../screens';
 import {TabIcon} from '../components';
+import {CHANGE_COLOR_TAB_BAR} from './graphql/queries';
+import {useQuery} from '@apollo/client';
+import {changeColorTabBarVar} from '../../graphql/cache';
 
 const TabBar = createBottomTabNavigator();
 
 export const TabBarNavigator = () => {
+  const {data} = useQuery(CHANGE_COLOR_TAB_BAR);
+  const {changeColorTabBar} = data;
+  console.log(changeColorTabBarVar(), changeColorTabBar);
+
   return (
     <TabBar.Navigator
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: 'rgba(62, 33, 77, 0.9)',
+          backgroundColor: changeColorTabBar
+            ? 'rgba(62, 33, 77, 0.7)'
+            : 'rgba(149, 143, 163, 0.9)',
           height: 80,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,

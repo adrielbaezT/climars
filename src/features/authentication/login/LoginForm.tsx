@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
+// import {useQuery, gql} from '@apollo/client';
 import {FormInput} from '../../../components';
 import {COLORS, SIZES} from '../../../constants/theme';
 import {RootStackParamList} from '../../../navigation/StackNavigator';
@@ -63,6 +64,13 @@ export const LoginForm = () => {
       }
     }
   };
+
+  // const IS_LOGGED_IN = gql`
+  //   query IsUserLoggedIn {
+  //     isLoggedIn @client
+  //   }
+  // `;
+  // const {data} = useQuery(IS_LOGGED_IN);
 
   return (
     <>
