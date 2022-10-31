@@ -5,68 +5,88 @@ import {
   View,
   TouchableOpacity,
   Image,
-  ActivityIndicator,
+  ScrollView,
   Alert,
 } from 'react-native';
+import {useForm} from 'react-hook-form';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {FormInput} from '../../../components';
+import {InputForm} from '../../../components/form/InputForm';
 import {COLORS, SIZES} from '../../../constants/theme';
+import {registerSchema} from '../login/validations/resgisterSchema';
+import {yupResolver} from '@hookform/resolvers/yup';
+
+type RegisterData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+};
 
 export const RegisterForm = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showSpinner, setShowSpinner] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
 
-  if (showSpinner) {
-    setInterval(() => {
-      setShowSpinner(false);
-    }, 3000);
-  }
-  const handleSubmit = () => {
-    setShowSpinner(true);
-    //show info in alert
-    Alert.alert(
-      `firstName: ${firstName} lastName: ${lastName} Email: ${email} Password: ${password}`,
-    );
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: {errors},
+  } = useForm<RegisterData>({
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+    },
+    resolver: yupResolver(registerSchema),
+  });
+  const onSubmit = (data: RegisterData) => {
+    console.log(data);
+    Alert.alert('Register', 'Register Success');
+    reset();
   };
 
   return (
-    <>
-      <FormInput
-        inputStyle={styles.input}
+    <ScrollView automaticallyAdjustKeyboardInsets={true}>
+      <InputForm
+        control={control}
+        name="firstName"
         label="First Name"
-        placeholder="Your First Name"
-        onChangeText={text => setFirstName(text)}
-      />
-      <FormInput
+        keyboardType="default"
+        placeholder="Enter your first name"
         inputStyle={styles.input}
+        errorMesssage={errors.firstName?.message}
+      />
+      <InputForm
+        control={control}
+        name="lastName"
         label="Last Name"
-        placeholder="Your Last Name"
-        onChangeText={text => setLastName(text)}
-      />
-      <FormInput
+        keyboardType="default"
+        placeholder="Enter your last name"
         inputStyle={styles.input}
+        errorMesssage={errors.lastName?.message}
+      />
+      <InputForm
+        control={control}
+        name="email"
         label="E-mail"
-        placeholder="Your email"
         keyboardType="email-address"
-        autocomplete="email"
-        onChangeText={text => setEmail(text)}
+        placeholder="Enter your email"
+        inputStyle={styles.input}
+        errorMesssage={errors.email?.message}
         appendComponent={
           <View style={{justifyContent: 'center', marginRight: 10}}>
             <Image source={require('../../../assets/img/mail.png')} />
           </View>
         }
       />
-      <FormInput
-        inputStyle={styles.input}
+      <InputForm
+        control={control}
+        name="password"
         label="Password"
-        placeholder="Your password"
+        placeholder="Enter your Password"
+        errorMesssage={errors.password?.message}
         secureTextEntry={showPassword}
-        autocomplete="off"
-        onChangeText={text => setPassword(text)}
+        inputStyle={styles.input}
         appendComponent={
           <View style={{justifyContent: 'center', marginRight: 10}}>
             <Image source={require('../../../assets/img/lock.png')} />
@@ -77,7 +97,7 @@ export const RegisterForm = () => {
             <TouchableOpacity
               activeOpacity={0.9}
               onPress={() => setShowPassword(prev => !prev)}>
-              <Icon name={showPassword ? 'eye' : 'eye-off'} size={20} />
+              <Icon name={showPassword ? 'eye-outline' : 'eye-off'} size={20} />
             </TouchableOpacity>
           </View>
         }
@@ -94,18 +114,14 @@ export const RegisterForm = () => {
       </Text>
 
       <View style={[styles.center, {marginTop: 60}]}>
-        {showSpinner ? (
-          <ActivityIndicator size="large" color={COLORS.purple} />
-        ) : (
-          <TouchableOpacity
-            style={styles.appButtonContainer}
-            activeOpacity={0.9}
-            onPress={handleSubmit}>
-            <Text style={styles.appButtonText}>Continue</Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={styles.appButtonContainer}
+          activeOpacity={0.9}
+          onPress={handleSubmit(onSubmit)}>
+          <Text style={styles.appButtonText}>Continue</Text>
+        </TouchableOpacity>
       </View>
-    </>
+    </ScrollView>
   );
 };
 

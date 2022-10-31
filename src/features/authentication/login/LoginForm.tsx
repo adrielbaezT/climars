@@ -16,6 +16,7 @@ import {RootStackParamList} from '../../../navigation/StackNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, SIZES} from '../../../constants/theme';
 import {loginSchema} from './validations/loginSchema';
+import {userVar} from '../../../../graphql';
 
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 type LoginData = {
@@ -49,6 +50,10 @@ export default function LoginForm() {
       data.email === credentials.email &&
       data.password === credentials.password
     ) {
+      userVar({
+        email: data.email,
+        password: data.password,
+      });
       if (!toggleCheckBox) {
         reset();
         return navigate('Home');
