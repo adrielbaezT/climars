@@ -3,7 +3,6 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
-  Image,
   ImageBackground,
   StyleSheet,
   Text,
@@ -13,6 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from '../../components/buttton';
 import {COLORS} from '../../constants/theme';
 import {useGetSol} from './hooks/useGetSol';
+import {Photo} from './Photo';
 
 export const Galery = () => {
   const {data, loading, getInitialData, nsol, currSol, setCurrSol, setNsol} =
@@ -47,6 +47,7 @@ export const Galery = () => {
       </View>
     );
   }
+  console.log('sol', data?.getPhotos[0]);
 
   return (
     <ImageBackground
@@ -87,14 +88,7 @@ export const Galery = () => {
             keyExtractor={item => item.id.toString()}
             horizontal
             renderItem={({item}) => (
-              <Image
-                source={{uri: item.img_src}}
-                style={{
-                  width: 150,
-                  height: 150,
-                  marginRight: 10,
-                }}
-              />
+              <Photo item={item} width={251} height={251} />
             )}
           />
         )}
@@ -112,6 +106,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 150,
     marginBottom: 150,
+    marginLeft: 10,
   },
   gradient: {
     position: 'absolute',
