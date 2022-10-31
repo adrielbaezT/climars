@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {TabBarNavigator} from './TabBarNavigator';
-import {NewsDetails} from '../features';
+import {NewsDetails, PhotoDetails} from '../features';
 import {Login, Register} from '../screens/auth';
 
 export type RootStackParamList = {
@@ -15,6 +15,13 @@ export type RootStackParamList = {
     link: string;
     pubDate: string;
   };
+  PhotoDetails: {
+    __typename: string;
+    earth_date: string;
+    id: number;
+    img_src: string;
+    sol: number;
+  };
 };
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -27,6 +34,7 @@ export const StackNavigator = () => {
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="Home" component={TabBarNavigator} />
       <Stack.Screen name="NewsDetails" component={NewsDetails} />
+      <Stack.Screen name="PhotoDetails" component={PhotoDetails} />
     </Stack.Navigator>
   );
 };

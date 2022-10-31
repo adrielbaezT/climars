@@ -19,6 +19,7 @@ export const HomeScreen = () => {
       icon: 'thunderstorm',
     },
   ];
+
   return (
     <ImageBackground
       source={require('../../assets/img/marsph.jpg')}

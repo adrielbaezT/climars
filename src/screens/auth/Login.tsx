@@ -2,6 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {userVar} from '../../../graphql';
 import {COLORS, SIZES} from '../../constants/theme';
 import LoginForm from '../../features/authentication/login/LoginForm';
 import {RootStackParamList} from '../../navigation/StackNavigator';
@@ -9,6 +10,7 @@ import {RootStackParamList} from '../../navigation/StackNavigator';
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 export const Login = () => {
   const {navigate} = useNavigation<LoginScreenProp>();
+
   return (
     <View style={styles.container}>
       <View
@@ -36,7 +38,13 @@ export const Login = () => {
         <View style={[styles.center, {marginTop: 20}]}>
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() => navigate('Home')}>
+            onPress={() => {
+              userVar({
+                email: 'pruebagoogle@gmail.com',
+                password: '1234569',
+              });
+              navigate('Home');
+            }}>
             <Image source={require('../../assets/img/google.png')} />
           </TouchableOpacity>
         </View>

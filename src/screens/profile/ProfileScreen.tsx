@@ -3,7 +3,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {FormInput} from '../../components';
+import {userVar} from '../../../graphql';
 import {COLORS} from '../../constants/theme';
 import {OptionMenu} from '../../features';
 import {RootStackParamList} from '../../navigation/StackNavigator';
@@ -12,6 +12,7 @@ type HomeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export const ProfileScreen = () => {
   const {navigate} = useNavigation<HomeScreenProp>();
+
   return (
     <View>
       <View
@@ -28,18 +29,17 @@ export const ProfileScreen = () => {
           width: '90%',
           alignSelf: 'center',
         }}>
-        <FormInput
+        {/* <InputForm
           inputStyle={styles.input}
           colorBackground={COLORS.lightGray3}
           placeholder="Buscar configuración"
           autocomplete="off"
-          onChangeText={() => console.log('text')}
           appendSecondComponent={
             <View style={{justifyContent: 'center', marginRight: 10}}>
               <Icon name="search-outline" size={30} color="black" />
             </View>
           }
-        />
+        /> */}
       </View>
       <OptionMenu icon="person-circle-outline" title="Tu Cuenta" />
       <OptionMenu
@@ -58,7 +58,10 @@ export const ProfileScreen = () => {
         <TouchableOpacity
           style={styles.appButtonContainer}
           activeOpacity={0.9}
-          onPress={() => navigate('Login')}>
+          onPress={() => {
+            userVar(null);
+            navigate('Login');
+          }}>
           <Text style={styles.appButtonText}>Log out</Text>
           <Icon name="log-out-outline" size={25} color="white" />
         </TouchableOpacity>

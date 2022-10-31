@@ -19,7 +19,7 @@ type RegisterData = {
 };
 
 interface FormInputProps {
-  control: Control<LoginData | RegisterData, any>;
+  control: Control<LoginData, any> | Control<RegisterData, any>;
   containerStyle?: any;
   name: LoginSchema | RegisterSchema;
   label: string;

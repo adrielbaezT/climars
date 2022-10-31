@@ -1,6 +1,12 @@
 import {InMemoryCache, makeVar} from '@apollo/client';
 
+interface IUser {
+  email: string;
+  password: string;
+}
+
 export const changeColorTabBarVar = makeVar<boolean>(true);
+export const userVar = makeVar<IUser | null>(null);
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
@@ -9,6 +15,11 @@ export const cache: InMemoryCache = new InMemoryCache({
         changeColorTabBar: {
           read() {
             return changeColorTabBarVar();
+          },
+        },
+        user: {
+          read() {
+            return userVar();
           },
         },
         launches: {

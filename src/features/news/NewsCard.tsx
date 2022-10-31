@@ -20,13 +20,13 @@ interface NewsCardProps {
   };
 }
 
-type HomeScreenProp = NativeStackNavigationProp<
+type NewsScreenProp = NativeStackNavigationProp<
   RootStackParamList,
   'NewsDetails'
 >;
 
 export const NewsCard: React.FC<NewsCardProps> = ({width = 251, item}) => {
-  const {navigate} = useNavigation<HomeScreenProp>();
+  const {navigate} = useNavigation<NewsScreenProp>();
   return (
     <TouchableOpacity
       activeOpacity={0.9}

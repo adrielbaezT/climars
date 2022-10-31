@@ -4,14 +4,12 @@ import {HomeScreen, MapScreen, NewsScreen, ProfileScreen} from '../screens';
 import {TabIcon} from '../components';
 import {CHANGE_COLOR_TAB_BAR} from './graphql/queries';
 import {useQuery} from '@apollo/client';
-import {changeColorTabBarVar} from '../../graphql/cache';
 
 const TabBar = createBottomTabNavigator();
 
 export const TabBarNavigator = () => {
   const {data} = useQuery(CHANGE_COLOR_TAB_BAR);
   const {changeColorTabBar} = data;
-  console.log(changeColorTabBarVar(), changeColorTabBar);
 
   return (
     <TabBar.Navigator
