@@ -12,8 +12,8 @@ import {useForm} from 'react-hook-form';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {registerSchema} from './validations/resgisterSchema';
-import {InputForm} from 'components';
 import {COLORS, SIZES} from 'constants/theme';
+import {InputRegister} from 'components/form';
 
 type RegisterData = {
   firstName: string;
@@ -47,7 +47,7 @@ export const RegisterForm = () => {
 
   return (
     <ScrollView automaticallyAdjustKeyboardInsets={true}>
-      <InputForm
+      <InputRegister
         control={control}
         name="firstName"
         label="First Name"
@@ -56,7 +56,7 @@ export const RegisterForm = () => {
         inputStyle={styles.input}
         errorMesssage={errors.firstName?.message}
       />
-      <InputForm
+      <InputRegister
         control={control}
         name="lastName"
         label="Last Name"
@@ -65,7 +65,7 @@ export const RegisterForm = () => {
         inputStyle={styles.input}
         errorMesssage={errors.lastName?.message}
       />
-      <InputForm
+      <InputRegister
         control={control}
         name="email"
         label="E-mail"
@@ -79,7 +79,7 @@ export const RegisterForm = () => {
           </View>
         }
       />
-      <InputForm
+      <InputRegister
         control={control}
         name="password"
         label="Password"

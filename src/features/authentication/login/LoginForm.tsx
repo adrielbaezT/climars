@@ -15,8 +15,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {RootStackParamList} from 'navigation/StackNavigator';
 import {loginSchema} from './validations/loginSchema';
 import {userVar} from 'graphql';
-import {InputForm} from 'components';
 import {COLORS, SIZES} from 'constants/theme';
+import {InputLogin} from 'components/form';
 
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 type LoginData = {
@@ -65,7 +65,7 @@ export default function LoginForm() {
 
   return (
     <View>
-      <InputForm
+      <InputLogin
         control={control}
         name="email"
         label="E-mail"
@@ -79,7 +79,7 @@ export default function LoginForm() {
           </View>
         }
       />
-      <InputForm
+      <InputLogin
         control={control}
         name="password"
         label="Password"
