@@ -1,41 +1,10 @@
 import React from 'react';
 import {Text, View, TextInput, StyleSheet} from 'react-native';
 import {Controller} from 'react-hook-form';
-import {AutoCapitalizeTypes, KeyBoardTypes} from '../types/InputTypes';
-import {Control} from 'react-hook-form/dist/types/form';
-import {LoginSchema, RegisterSchema} from './types';
 import {COLORS, SIZES} from 'constants/theme';
+import {ILogin} from '../interfaces';
 
-type LoginData = {
-  email: string;
-  password: string;
-};
-
-type RegisterData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-};
-
-interface FormInputProps {
-  control: Control<LoginData, any> | Control<RegisterData, any>;
-  containerStyle?: any;
-  name: LoginSchema | RegisterSchema;
-  label: string;
-  placeholder: string;
-  inputStyle?: any;
-  secureTextEntry?: boolean;
-  keyboardType?: KeyBoardTypes;
-  autocomplete?: AutoCapitalizeTypes;
-  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
-  errorMesssage?: string;
-  appendComponent?: JSX.Element;
-  appendSecondComponent?: JSX.Element;
-  colorBackground?: string;
-}
-
-export const InputForm = ({
+export const InputLogin: React.FC<ILogin> = ({
   name,
   label,
   placeholder,
@@ -50,7 +19,7 @@ export const InputForm = ({
   appendComponent,
   appendSecondComponent,
   colorBackground = COLORS.white2,
-}: FormInputProps) => {
+}) => {
   return (
     <View style={{...containerStyle}}>
       <View
