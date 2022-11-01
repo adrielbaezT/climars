@@ -1,18 +1,42 @@
+import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useForm} from 'react-hook-form';
+import {OptionMenu} from 'features/profile';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS} from 'constants/theme';
-import {OptionMenu} from 'features/profile';
 import {RootStackParamList} from 'navigation/StackNavigator';
-import React from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {userVar} from 'graphql';
+import {InputText} from 'components/form/text';
+
+const OPTIONS = [
+  {
+    icon: 'person-circle-outline',
+    title: 'Tu Cuenta',
+  },
+  {
+    icon: 'shield-checkmark-outline',
+    title: 'Privacidad y seguridad',
+  },
+  {icon: 'notifications-outline', title: 'Notificaciones'},
+  {icon: 'globe-outline', title: 'Lenguajes'},
+  {icon: 'color-palette-outline', title: 'Personalizar'},
+];
 
 type HomeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+type TextData = {
+  search: string;
+};
 
 export const ProfileScreen = () => {
   const {navigate} = useNavigation<HomeScreenProp>();
   const user = userVar();
+  const {control} = useForm<TextData>({
+    defaultValues: {
+      search: '',
+    },
+  });
 
   return (
     <View>
@@ -20,7 +44,7 @@ export const ProfileScreen = () => {
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          marginVertical: 20,
+          marginVertical: 15,
         }}>
         <Text style={[styles.text]}>Configuración</Text>
         <Text style={{fontSize: 15}}>{user?.email}</Text>
@@ -30,26 +54,26 @@ export const ProfileScreen = () => {
           width: '90%',
           alignSelf: 'center',
         }}>
-        {/* <InputForm
-          inputStyle={styles.input}
-          colorBackground={COLORS.lightGray3}
+        <InputText
+          control={control}
+          name="search"
+          keyboardType="default"
           placeholder="Buscar configuración"
-          autocomplete="off"
+          inputStyle={styles.input}
           appendSecondComponent={
             <View style={{justifyContent: 'center', marginRight: 10}}>
-              <Icon name="search-outline" size={30} color="black" />
+              <Icon name="search" size={20} color={COLORS.gray} />
             </View>
           }
-        /> */}
+        />
       </View>
-      <OptionMenu icon="person-circle-outline" title="Tu Cuenta" />
-      <OptionMenu
-        icon="shield-checkmark-outline"
-        title="Privacidad y seguridad"
-      />
-      <OptionMenu icon="notifications-outline" title="Notificaciones" />
-      <OptionMenu icon="globe-outline" title="Lenguajes" />
-      <OptionMenu icon="color-palette-outline" title="Personalizar" />
+      {OPTIONS.map((option, index) => (
+        <OptionMenu
+          key={option.title + index}
+          icon={option.icon}
+          title={option.title}
+        />
+      ))}
       <View
         style={{
           width: '90%',
