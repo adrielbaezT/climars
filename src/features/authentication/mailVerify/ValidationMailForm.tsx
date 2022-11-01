@@ -1,6 +1,6 @@
 import React from 'react';
+import {COLORS} from 'constants/theme';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {COLORS} from '../../../constants/theme';
 
 export const ValidationMailForm = () => {
   return (

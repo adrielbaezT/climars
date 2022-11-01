@@ -1,9 +1,9 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {COLORS, SIZES} from 'constants/theme';
+import {RootStackParamList} from 'navigation/StackNavigator';
 import React from 'react';
 import {Text, View, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS, SIZES} from '../../constants/theme';
-import {RootStackParamList} from '../../navigation/StackNavigator';
 import {nasaImage} from './data';
 
 export const NewsDetails = () => {

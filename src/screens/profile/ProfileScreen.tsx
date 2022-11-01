@@ -1,17 +1,18 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {COLORS} from 'constants/theme';
+import {OptionMenu} from 'features/profile';
+import {RootStackParamList} from 'navigation/StackNavigator';
 import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {userVar} from '../../../graphql';
-import {COLORS} from '../../constants/theme';
-import {OptionMenu} from '../../features';
-import {RootStackParamList} from '../../navigation/StackNavigator';
+import {userVar} from 'graphql';
 
 type HomeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export const ProfileScreen = () => {
   const {navigate} = useNavigation<HomeScreenProp>();
+  const user = userVar();
 
   return (
     <View>
@@ -22,7 +23,7 @@ export const ProfileScreen = () => {
           marginVertical: 20,
         }}>
         <Text style={[styles.text]}>Configuración</Text>
-        <Text style={{fontSize: 15}}>@emasanchezspacex</Text>
+        <Text style={{fontSize: 15}}>{user?.email}</Text>
       </View>
       <View
         style={{

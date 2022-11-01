@@ -1,10 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {COLORS, SIZES} from 'constants/theme';
+import {RootStackParamList} from 'navigation/StackNavigator';
 import React from 'react';
 import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS, SIZES} from '../../constants/theme';
-import {RootStackParamList} from '../../navigation/StackNavigator';
 import {nasaImage} from './data';
 
 interface NewsCardProps {

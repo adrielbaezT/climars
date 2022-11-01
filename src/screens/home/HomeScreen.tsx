@@ -1,8 +1,7 @@
+import {GradientBackground, WeatherCard} from 'components';
+import {Date, Temp, Weather} from 'features/home';
 import React from 'react';
 import {ImageBackground, View} from 'react-native';
-import {WeatherCard} from '../../components';
-import {GradientBackground} from '../../components/gradientBackground/GradientBackground';
-import {Date, Temp, Weather} from '../../features/home';
 
 export const HomeScreen = () => {
   const data1 = [

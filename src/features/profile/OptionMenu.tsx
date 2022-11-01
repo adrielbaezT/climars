@@ -1,7 +1,7 @@
+import {COLORS, SIZES} from 'constants/theme';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS, SIZES} from '../../constants/theme';
 
 interface Props {
   icon: string;

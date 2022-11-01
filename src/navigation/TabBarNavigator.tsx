@@ -1,9 +1,9 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {HomeScreen, MapScreen, NewsScreen, ProfileScreen} from '../screens';
-import {TabIcon} from '../components';
-import {CHANGE_COLOR_TAB_BAR} from './graphql/queries';
 import {useQuery} from '@apollo/client';
+import {CHANGE_COLOR_TAB_BAR} from './graphql/queries';
+import {HomeScreen, MapScreen, NewsScreen, ProfileScreen} from 'screens';
+import {TabIcon} from 'components';
 
 const TabBar = createBottomTabNavigator();
 

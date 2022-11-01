@@ -1,8 +1,8 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {TabBarNavigator} from './TabBarNavigator';
-import {NewsDetails, PhotoDetails} from '../features';
-import {Login, Register} from '../screens/auth';
+import {Login, Register} from 'screens/auth';
+import {NewsDetails, PhotoDetails} from 'features';
 
 export type RootStackParamList = {
   Login: undefined;

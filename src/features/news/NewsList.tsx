@@ -3,8 +3,8 @@ import {gql, useQuery} from '@apollo/client';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {NewsCard} from './NewsCard';
 import {Data} from './interfaces';
-import {COLORS, SIZES} from '../../constants/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {COLORS, SIZES} from 'constants/theme';
 
 const GET_NEWS = gql`
   query GetNews {

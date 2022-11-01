@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {RootNavigator} from './src/navigation/RootNavigation';
+import {RootNavigator} from './navigation/RootNavigation';
 import {ApolloClient, ApolloProvider} from '@apollo/client';
-import {cache} from './graphql/cache';
+import {cache} from 'graphql';
 
 // Initialize Apollo Client
 const client = new ApolloClient({

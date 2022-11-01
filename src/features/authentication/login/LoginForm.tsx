@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {InputForm} from '../../../components/form/InputForm';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../../navigation/StackNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS, SIZES} from '../../../constants/theme';
+import {RootStackParamList} from 'navigation/StackNavigator';
 import {loginSchema} from './validations/loginSchema';
-import {userVar} from '../../../../graphql';
+import {userVar} from 'graphql';
+import {InputForm} from 'components';
+import {COLORS, SIZES} from 'constants/theme';
 
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 type LoginData = {

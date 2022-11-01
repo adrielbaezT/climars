@@ -1,11 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {COLORS, SIZES} from 'constants/theme';
+import LoginForm from 'features/authentication/login/LoginForm';
+import {userVar} from 'graphql';
+import {RootStackParamList} from 'navigation/StackNavigator';
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import {userVar} from '../../../graphql';
-import {COLORS, SIZES} from '../../constants/theme';
-import LoginForm from '../../features/authentication/login/LoginForm';
-import {RootStackParamList} from '../../navigation/StackNavigator';
 
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 export const Login = () => {

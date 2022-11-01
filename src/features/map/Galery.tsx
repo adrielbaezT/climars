@@ -1,4 +1,6 @@
 import React, {useEffect} from 'react';
+import {Button} from 'components/buttton';
+import {COLORS} from 'constants/theme';
 import {
   ActivityIndicator,
   Alert,
@@ -9,8 +11,6 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Button} from '../../components/buttton';
-import {COLORS} from '../../constants/theme';
 import {useGetSol} from './hooks/useGetSol';
 import {Photo} from './Photo';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import {NewsList} from '../../features';
+import {NewsList} from 'features';
 
 export const NewsScreen = () => {
   return (

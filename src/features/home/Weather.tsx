@@ -1,6 +1,6 @@
+import {COLORS} from 'constants/theme';
 import React from 'react';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
-import {COLORS} from '../../constants/theme';
 import {Slide} from './Slide';
 
 export const Weather = () => {

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import dayjs from 'dayjs';
-import {Button} from '../../components/buttton';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {Button} from 'components/buttton';
 dayjs.locale('es');
 
 export const Date = () => {

@@ -10,10 +10,10 @@ import {
 } from 'react-native';
 import {useForm} from 'react-hook-form';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {InputForm} from '../../../components/form/InputForm';
-import {COLORS, SIZES} from '../../../constants/theme';
-import {registerSchema} from '../login/validations/resgisterSchema';
 import {yupResolver} from '@hookform/resolvers/yup';
+import {registerSchema} from './validations/resgisterSchema';
+import {InputForm} from 'components';
+import {COLORS, SIZES} from 'constants/theme';
 
 type RegisterData = {
   firstName: string;

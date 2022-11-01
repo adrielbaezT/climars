@@ -1,9 +1,9 @@
 import React from 'react';
+import {Button} from 'components/buttton';
+import {COLORS} from 'constants/theme';
 import {StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS} from '../../constants/theme';
-import {Button} from '../buttton';
 
 interface Props {
   item: {

@@ -1,8 +1,8 @@
 import React from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {TouchableOpacity, Image} from 'react-native';
-import {RootStackParamList} from '../../navigation/StackNavigator';
 import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from 'navigation/StackNavigator';
 type PhotoScreenProp = NativeStackNavigationProp<
   RootStackParamList,
   'PhotoDetails'

@@ -1,9 +1,9 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {COLORS} from 'constants/theme';
+import {RootStackParamList} from 'navigation/StackNavigator';
 import React, {useState} from 'react';
 import {TouchableOpacity, Text, View, Image, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS} from '../../constants/theme';
-import {RootStackParamList} from '../../navigation/StackNavigator';
 
 export const PhotoDetails = () => {
   const navigate = useNavigation();

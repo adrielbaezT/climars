@@ -2,9 +2,9 @@ import React from 'react';
 import {Text, View, TextInput, StyleSheet} from 'react-native';
 import {Controller} from 'react-hook-form';
 import {AutoCapitalizeTypes, KeyBoardTypes} from '../types/InputTypes';
-import {COLORS, SIZES} from '../../constants/theme';
 import {Control} from 'react-hook-form/dist/types/form';
 import {LoginSchema, RegisterSchema} from './types';
+import {COLORS, SIZES} from 'constants/theme';
 
 type LoginData = {
   email: string;

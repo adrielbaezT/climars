@@ -1,8 +1,8 @@
 import {useNavigation} from '@react-navigation/native';
+import {COLORS, SIZES} from 'constants/theme';
+import {RegisterForm} from 'features';
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {COLORS, SIZES} from '../../constants/theme';
-import {RegisterForm} from '../../features';
 
 export const Register = () => {
   const navigate = useNavigation();
