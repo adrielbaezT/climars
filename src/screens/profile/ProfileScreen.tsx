@@ -1,14 +1,19 @@
-import React from 'react';
+import React, {useMemo, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useForm} from 'react-hook-form';
 import {OptionMenu} from 'features/profile';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS} from 'constants/theme';
 import {RootStackParamList} from 'navigation/StackNavigator';
 import {userVar} from 'graphql';
-import {InputText} from 'components/form/text';
+import {useDebouncedText} from 'hooks';
 
 const OPTIONS = [
   {
@@ -25,18 +30,21 @@ const OPTIONS = [
 ];
 
 type HomeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
-type TextData = {
-  search: string;
-};
 
 export const ProfileScreen = () => {
   const {navigate} = useNavigation<HomeScreenProp>();
   const user = userVar();
-  const {control} = useForm<TextData>({
-    defaultValues: {
-      search: '',
-    },
-  });
+  const [search, setSearch] = useState<string>('');
+
+  const {value} = useDebouncedText(search, 700);
+  const optionsFiltered = useMemo(() => {
+    return OPTIONS.filter(
+      option =>
+        option.title.toLowerCase().trim().includes(value.toLowerCase()) ||
+        value === '',
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   return (
     <View>
@@ -54,20 +62,16 @@ export const ProfileScreen = () => {
           width: '90%',
           alignSelf: 'center',
         }}>
-        <InputText
-          control={control}
-          name="search"
-          keyboardType="default"
-          placeholder="Buscar configuración"
-          inputStyle={styles.input}
-          appendSecondComponent={
-            <View style={{justifyContent: 'center', marginRight: 10}}>
-              <Icon name="search" size={20} color={COLORS.gray} />
-            </View>
-          }
-        />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Buscar configuración"
+            onChangeText={text => setSearch(text)}
+          />
+          <Icon name="search" size={20} color={COLORS.gray} />
+        </View>
       </View>
-      {OPTIONS.map((option, index) => (
+      {optionsFiltered.map((option, index) => (
         <OptionMenu
           key={option.title + index}
           icon={option.icon}
@@ -122,5 +126,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     marginRight: 10,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: COLORS.lightGray,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginVertical: 5,
   },
 });
