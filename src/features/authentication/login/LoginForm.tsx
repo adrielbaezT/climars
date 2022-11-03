@@ -14,7 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {RootStackParamList} from 'navigation/StackNavigator';
 import {loginSchema} from './validations/loginSchema';
-import {userVar} from 'graphql';
+import {onBoardingVar, userVar} from 'graphql';
 import {COLORS, SIZES} from 'constants/theme';
 import {InputLogin} from 'components/form';
 
@@ -54,12 +54,15 @@ export default function LoginForm() {
         email: data.email,
         password: data.password,
       });
-      if (!toggleCheckBox) {
-        reset();
+      if (!onBoardingVar()) {
         return navigate('Home');
       }
+      if (!toggleCheckBox) {
+        reset();
+        return navigate('OnBoardingScreen');
+      }
 
-      return navigate('Home');
+      return navigate('OnBoardingScreen');
     }
   };
 
