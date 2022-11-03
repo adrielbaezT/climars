@@ -6,6 +6,7 @@ interface IUser {
 }
 
 export const changeColorTabBarVar = makeVar<boolean>(true);
+export const onBoardingVar = makeVar<boolean>(true);
 export const userVar = makeVar<IUser | null>(null);
 
 export const cache: InMemoryCache = new InMemoryCache({
@@ -20,6 +21,11 @@ export const cache: InMemoryCache = new InMemoryCache({
         user: {
           read() {
             return userVar();
+          },
+        },
+        onBoarding: {
+          read() {
+            return onBoardingVar();
           },
         },
         launches: {
