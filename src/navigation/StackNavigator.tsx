@@ -3,11 +3,13 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {TabBarNavigator} from './TabBarNavigator';
 import {Login, Register} from 'screens/auth';
 import {NewsDetails, PhotoDetails} from 'features';
+import {OnBoardingScreen} from 'screens/onBoarding';
 
 export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   Home: undefined;
+  OnBoardingScreen: undefined;
   NewsDetails: {
     id: string | null;
     title: string;
@@ -32,6 +34,7 @@ export const StackNavigator = () => {
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
       <Stack.Screen name="Home" component={TabBarNavigator} />
       <Stack.Screen name="NewsDetails" component={NewsDetails} />
       <Stack.Screen name="PhotoDetails" component={PhotoDetails} />
