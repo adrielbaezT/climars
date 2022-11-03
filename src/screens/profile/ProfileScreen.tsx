@@ -43,7 +43,6 @@ export const ProfileScreen = () => {
         option.title.toLowerCase().trim().includes(value.toLowerCase()) ||
         value === '',
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   return (

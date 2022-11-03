@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {COLORS, SIZES} from 'constants/theme';
 import LoginForm from 'features/authentication/login/LoginForm';
-import {userVar} from 'graphql';
+import {onBoardingVar, userVar} from 'graphql';
 import {RootStackParamList} from 'navigation/StackNavigator';
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
@@ -43,6 +43,10 @@ export const Login = () => {
                 email: 'pruebagoogle@gmail.com',
                 password: '1234569',
               });
+              if (onBoardingVar()) {
+                return navigate('OnBoardingScreen');
+              }
+              onBoardingVar(false);
               navigate('Home');
             }}>
             <Image source={require('../../assets/img/google.png')} />
