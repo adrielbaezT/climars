@@ -1,15 +1,15 @@
 import {useLazyQuery} from '@apollo/client';
-import React, {useEffect, useState} from 'react';
-import {GET_PAGES, GET_PHOTOS, GET_SOL} from '../graphql/queries';
+import {useEffect, useState} from 'react';
+import {GET_PAGES, GET_PHOTOS} from '../graphql/queries';
 
 export const useGetSol = () => {
   const [nsol, setNsol] = useState(-1);
-  const [currSol, setCurrSol] = useState(-1);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(0);
   const [manifest, setManifest] = useState([]);
+  const [currSol, setCurrSol] = useState(-1);
   //=========== GraphQL queries ===========
-  const [getPhotos, {loading, error, data, called, refetch}] =
+  const [getPhotos, {loading, data, called, refetch}] =
     useLazyQuery(GET_PHOTOS);
 
   const [
@@ -17,18 +17,15 @@ export const useGetSol = () => {
     {loading: loading_pages, error: error_pages, data: data_pages},
   ] = useLazyQuery(GET_PAGES);
 
-  const [getSol, {loading: loading_sol, error: error_sol, data: data_sol}] =
-    useLazyQuery(GET_SOL);
   // ===========
   const getCurrentSol = async () => {
     if (currSol !== -1) {
       if (called) {
-        setPages(Math.ceil(manifest[-nsol].total_photos / 25));
+        setPages(Math.ceil(manifest.photos[-nsol].total_photos / 25));
         await refetch({sol: currSol, page});
         return null;
       }
-      setPages(Math.ceil(manifest[-nsol].total_photos / 25));
-
+      setPages(Math.ceil(manifest.photos[-nsol].total_photos / 25));
       await getPhotos({
         variables: {
           sol: currSol,
@@ -43,12 +40,11 @@ export const useGetSol = () => {
   }, [currSol]);
 
   const getInitialData = async () => {
-    const res = await getSol();
-    const sum = currSol + res.data?.getSol.max_sol;
-    const manifestResp = await getPages();
-    // console.log(manifest.data.getPages[0].sol);
+    setCurrSol(-1);
+    const manifestData = await getPages();
+    const sum = currSol + manifestData.data?.getPages.max_sol;
 
-    setManifest(manifestResp.data.getPages);
+    setManifest(manifestData.data.getPages);
     setCurrSol(sum);
   };
 
