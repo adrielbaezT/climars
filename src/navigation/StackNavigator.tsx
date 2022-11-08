@@ -4,10 +4,12 @@ import {TabBarNavigator} from './TabBarNavigator';
 import {Login, Register} from 'screens/auth';
 import {NewsDetails, PhotoDetails} from 'features';
 import {OnBoardingScreen} from 'screens/onBoarding';
+import {VerifyEmailScreen} from 'screens/auth/VerifyEmail';
 
 export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
+  VerifyEmailScreen: undefined;
   Home: undefined;
   OnBoardingScreen: undefined;
   NewsDetails: {
@@ -34,6 +36,7 @@ export const StackNavigator = () => {
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="VerifyEmailScreen" component={VerifyEmailScreen} />
       <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
       <Stack.Screen name="Home" component={TabBarNavigator} />
       <Stack.Screen name="NewsDetails" component={NewsDetails} />
