@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {COLORS, SIZES} from 'constants/theme';
-import {RegisterForm} from 'features';
+import {RegisterForm} from 'features/authentication';
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 

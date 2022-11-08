@@ -6,7 +6,6 @@ import {onBoardingVar, userVar} from 'graphql';
 import {RootStackParamList} from 'navigation/StackNavigator';
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-// import OTPInputView from '@twotalltotems/react-native-otp-input';
 
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 export const Login = () => {
@@ -14,14 +13,6 @@ export const Login = () => {
 
   return (
     <View style={styles.container}>
-      {/* <OTPInputView
-        style={{width: '80%', height: 200}}
-        pinCount={4}
-        autoFocusOnLoad
-        onCodeFilled={code => {
-          console.log(`Code is ${code}, you are good to go!`);
-        }}
-      /> */}
       <View
         style={{
           marginTop: 70,
