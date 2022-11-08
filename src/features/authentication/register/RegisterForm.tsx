@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Alert,
 } from 'react-native';
 import {useForm} from 'react-hook-form';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -14,6 +13,9 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {registerSchema} from './validations/resgisterSchema';
 import {COLORS, SIZES} from 'constants/theme';
 import {InputRegister} from 'components/form';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from 'navigation/StackNavigator';
 
 type RegisterData = {
   firstName: string;
@@ -21,9 +23,14 @@ type RegisterData = {
   email: string;
   password: string;
 };
+type RegisterScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Register'
+>;
 
 export const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(true);
+  const navigate = useNavigation<RegisterScreenProp>();
 
   const {
     handleSubmit,
@@ -41,8 +48,8 @@ export const RegisterForm = () => {
   });
   const onSubmit = (data: RegisterData) => {
     console.log(data);
-    Alert.alert('Register', 'Register Success');
     reset();
+    navigate.navigate('VerifyEmailScreen');
   };
 
   return (
