@@ -1,4 +1,5 @@
-import {useLazyQuery} from '@apollo/client';
+import {useLazyQuery, useReactiveVar} from '@apollo/client';
+import {userVar} from 'graphql';
 import {useEffect, useState} from 'react';
 import {GET_PAGES, GET_PHOTOS} from '../graphql/queries';
 
@@ -8,14 +9,30 @@ export const useGetSol = () => {
   const [pages, setPages] = useState(0);
   const [manifest, setManifest] = useState([]);
   const [currSol, setCurrSol] = useState(-1);
+
+  const user = useReactiveVar(userVar);
   //=========== GraphQL queries ===========
-  const [getPhotos, {loading, data, called, refetch}] =
-    useLazyQuery(GET_PHOTOS);
+  const [getPhotos, {loading, data, called, refetch}] = useLazyQuery(
+    GET_PHOTOS,
+    {
+      context: {
+        headers: {
+          authorization: 'Bearer ' + user?.token,
+        },
+      },
+    },
+  );
 
   const [
     getPages,
     {loading: loading_pages, error: error_pages, data: data_pages},
-  ] = useLazyQuery(GET_PAGES);
+  ] = useLazyQuery(GET_PAGES, {
+    context: {
+      headers: {
+        authorization: 'Bearer ' + user?.token,
+      },
+    },
+  });
 
   // ===========
   const getCurrentSol = async () => {

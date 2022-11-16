@@ -48,6 +48,7 @@ export const InputLogin: React.FC<ILogin> = ({
           render={({field: {onChange, onBlur, value}}) => (
             <TextInput
               style={{flex: 1, ...inputStyle}}
+              defaultValue={value}
               onBlur={onBlur}
               onChangeText={text => onChange(text)}
               value={value}

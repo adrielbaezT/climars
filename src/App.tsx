@@ -3,6 +3,7 @@ import React from 'react';
 import {RootNavigator} from './navigation/RootNavigation';
 import {ApolloClient, ApolloProvider} from '@apollo/client';
 import {cache} from 'graphql';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 // Initialize Apollo Client
 const client = new ApolloClient({
@@ -13,7 +14,9 @@ const client = new ApolloClient({
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <RootNavigator />
+      <GestureHandlerRootView style={{flex: 1}}>
+        <RootNavigator />
+      </GestureHandlerRootView>
     </ApolloProvider>
   );
 };

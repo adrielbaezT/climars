@@ -47,7 +47,6 @@ export const Galery = () => {
       </View>
     );
   }
-  console.log(currSol);
 
   return (
     <ImageBackground

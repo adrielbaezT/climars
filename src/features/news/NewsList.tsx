@@ -1,10 +1,11 @@
-import React from 'react';
-import {gql, useQuery} from '@apollo/client';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {gql, useLazyQuery, useQuery, useReactiveVar} from '@apollo/client';
+import {FlatList, StyleSheet, Text, View, Image} from 'react-native';
 import {NewsCard} from './NewsCard';
 import {Data} from './interfaces';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, SIZES} from 'constants/theme';
+import {userVar} from 'graphql';
 
 const GET_NEWS = gql`
   query GetNews {
@@ -18,8 +19,62 @@ const GET_NEWS = gql`
   }
 `;
 
+const GET_POSTS = gql`
+  query GetPosts($img_id: Int) {
+    getPosts(img_id: $img_id) {
+      post
+      id
+      str_userId
+      user_img
+      user_name
+      img_id
+    }
+  }
+`;
+
+// const {data} = useQuery<Data>(GET_NEWS, {
+//   context:{
+//     headers:{
+//       authorization: 'Bearer ' + token
+//     }
+//   }
+// });
+
 export const NewsList = () => {
-  const {data} = useQuery<Data>(GET_NEWS);
+  const user = useReactiveVar(userVar);
+  const {data} = useQuery<Data>(GET_NEWS, {
+    context: {
+      headers: {
+        authorization: 'Bearer ' + user?.token,
+      },
+    },
+  });
+  const [
+    getPosts,
+    {
+      loading: loading_posts,
+      error: error_posts,
+      data: data_posts,
+      called: calledPosts,
+      refetch: refetchPosts,
+    },
+  ] = useLazyQuery(GET_POSTS, {
+    context: {
+      headers: {
+        authorization: 'Bearer ' + user?.token,
+      },
+    },
+  });
+
+  useEffect(() => {
+    if (data) {
+      getPosts({
+        variables: {
+          img_id: data.getNews[0].id,
+        },
+      });
+    }
+  }, []);
 
   return (
     <>
