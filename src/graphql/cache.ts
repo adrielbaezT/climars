@@ -1,9 +1,7 @@
 import {InMemoryCache, makeVar} from '@apollo/client';
+import {User} from 'features/authentication/login/interfaces/User';
 
-interface IUser {
-  email: string;
-  password: string;
-}
+interface IUser extends User {}
 
 export const changeColorTabBarVar = makeVar<boolean>(true);
 export const onBoardingVar = makeVar<boolean>(true);
