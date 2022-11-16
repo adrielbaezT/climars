@@ -1,17 +1,51 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {COLORS} from 'constants/theme';
 import {RootStackParamList} from 'navigation/StackNavigator';
-import React, {useState} from 'react';
-import {TouchableOpacity, Text, View, Image, StyleSheet} from 'react-native';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  Platform,
+  Dimensions,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import BottomSheet from '@gorhom/bottom-sheet';
+import {Comments} from './components';
+// import {useLikes} from './hooks/useLikes';
 
 export const PhotoDetails = () => {
   const navigate = useNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'PhotoDetails'>>();
-  const {sol, img_src} = route.params;
+  const {img_src, id, sol} = route.params;
   const [isLiked, setIsLiked] = useState(false);
+
+  // Bottom Sheet
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  // variables
+  const platformDimension = Platform.OS === 'ios' ? 'screen' : 'window';
+  const {height: screenHeight} = Dimensions.get(platformDimension);
+  const snapPoints = useMemo(
+    () => [`${screenHeight * 0.4}%`, `${screenHeight * 0.5}%`],
+    [screenHeight],
+  );
+
+  // callbacks
+  const handleSheetChanges = useCallback((index: number) => {
+    bottomSheetRef.current?.snapToIndex(index);
+    setIsOpen(true);
+  }, []);
+
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.white,
+      }}>
       <Image
         source={{uri: img_src}}
         style={{
@@ -20,17 +54,6 @@ export const PhotoDetails = () => {
           marginRight: 10,
         }}
       />
-      <Text
-        style={{
-          fontSize: 35,
-          fontWeight: 'bold',
-          color: COLORS.primary,
-          marginTop: 10,
-          textAlign: 'center',
-        }}>
-        Sol Number: {sol}
-      </Text>
-      {/* Add like and comment section */}
       <View
         style={{
           flexDirection: 'row',
@@ -59,8 +82,21 @@ export const PhotoDetails = () => {
             </Text>
           </View>
         </TouchableOpacity>
-        <Icon name="chatbubbles" size={30} color={COLORS.gray} />
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => handleSheetChanges(0)}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: 10,
+            }}>
+            <Icon name="chatbubbles" size={30} color={COLORS.gray} />
+          </View>
+        </TouchableOpacity>
       </View>
+
       <View
         style={{
           width: 100,
@@ -82,6 +118,11 @@ export const PhotoDetails = () => {
           </View>
         </TouchableOpacity>
       </View>
+      <View style={styles.container}>
+        <View style={styles.contentContainer}>
+          <Comments imgId={id} imgSrc={img_src} sol={sol} />
+        </View>
+      </View>
     </View>
   );
 };
@@ -101,5 +142,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     alignSelf: 'center',
+  },
+  container: {
+    flex: 1,
+    padding: 2,
+  },
+  contentContainer: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+    padding: 16,
   },
 });
