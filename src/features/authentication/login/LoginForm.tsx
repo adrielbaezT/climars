@@ -6,6 +6,7 @@ import {
   Image,
   StyleSheet,
   Switch,
+  Alert,
 } from 'react-native';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -17,6 +18,8 @@ import {loginSchema} from './validations/loginSchema';
 import {onBoardingVar, userVar} from 'graphql';
 import {COLORS, SIZES} from 'constants/theme';
 import {InputLogin} from 'components/form';
+import axios from 'axios';
+import {User} from './interfaces/User';
 
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 type LoginData = {
@@ -41,29 +44,25 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(true);
   const {navigate} = useNavigation<LoginScreenProp>();
 
-  const credentials = {
-    email: 'test@gmail.com',
-    password: '12345678',
-  };
-  const onSubmit = (data: LoginData) => {
-    if (
-      data.email === credentials.email &&
-      data.password === credentials.password
-    ) {
-      userVar({
-        email: data.email,
-        password: data.password,
-      });
-      if (!onBoardingVar()) {
-        return navigate('Home');
-      }
-      if (!toggleCheckBox) {
-        reset();
-        return navigate('OnBoardingScreen');
-      }
+  const handleLogin = async (dataLogin: LoginData) => {
+    const {data} = await axios.post<User>(
+      'http://192.168.15.202:85/api/auth/login',
+      dataLogin,
+    );
+    if (!data) {
+      return Alert.alert('Error', 'Email or password incorrect');
+    }
 
+    userVar({...data});
+    if (!onBoardingVar()) {
+      return navigate('Home');
+    }
+    if (!toggleCheckBox) {
+      reset();
       return navigate('OnBoardingScreen');
     }
+
+    return navigate('OnBoardingScreen');
   };
 
   return (
@@ -133,7 +132,7 @@ export default function LoginForm() {
       <TouchableOpacity
         style={styles.appButtonContainer}
         activeOpacity={0.9}
-        onPress={handleSubmit(onSubmit)}>
+        onPress={handleSubmit(handleLogin)}>
         <Text style={styles.appButtonText}>Login</Text>
       </TouchableOpacity>
     </View>
