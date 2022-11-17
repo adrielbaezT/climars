@@ -1,6 +1,6 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import {COLORS, SIZES} from 'constants/theme';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 import {
@@ -10,6 +10,9 @@ import {
   ActivityIndicator,
   TextInput,
   TouchableOpacity,
+  Text,
+  Keyboard,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {usePost} from '../hooks/usePost';
@@ -22,7 +25,7 @@ interface CommentsProps {
 }
 
 const postSchema = yup.object().shape({
-  post: yup.string().required('Post is required'),
+  post: yup.string().required('You must enter a comment'),
 });
 
 interface PostData {
@@ -49,18 +52,18 @@ export const Comments: React.FC<CommentsProps> = ({imgId, imgSrc, sol}) => {
     },
     resolver: yupResolver(postSchema),
   });
-  // if (loading_posts) {
-  //   return (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         justifyContent: 'center',
-  //         alignItems: 'center',
-  //       }}>
-  //       <ActivityIndicator size="large" color={COLORS.primary} />
-  //     </View>
-  //   );
-  // }
+  if (loading_posts) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+      </View>
+    );
+  }
 
   const onSubmitPost = async (post: PostData) => {
     await createPost({
@@ -73,9 +76,14 @@ export const Comments: React.FC<CommentsProps> = ({imgId, imgSrc, sol}) => {
     });
 
     refetchPosts({img_id: imgId});
+    Keyboard.dismiss();
 
     reset();
   };
+
+  if (errors.post?.message) {
+    Alert.alert('Error', errors.post?.message);
+  }
 
   return (
     <>
@@ -90,14 +98,18 @@ export const Comments: React.FC<CommentsProps> = ({imgId, imgSrc, sol}) => {
             paddingHorizontal: 10,
           }}>
           <View style={styles.container}>
-            {data_posts?.getPosts.map(post => (
-              <Comment
-                key={post.id}
-                item={post}
-                imgId={imgId}
-                imgSrc={imgSrc}
-              />
-            ))}
+            {data_posts?.getPosts?.length === 0 || !data_posts?.getPosts ? (
+              <Text>No hay comments</Text>
+            ) : (
+              data_posts?.getPosts.map(post => (
+                <Comment
+                  key={post.id}
+                  item={post}
+                  imgId={imgId}
+                  imgSrc={imgSrc}
+                />
+              ))
+            )}
           </View>
         </View>
       </ScrollView>
