@@ -1,9 +1,10 @@
 import {COLORS} from 'constants/theme';
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {usePost} from '../hooks/usePost';
 import {IPost} from '../interfaces/PostInterfaces';
+import {EditModal} from './EditModal';
 
 export interface CommentProps {
   item: IPost;
@@ -13,16 +14,20 @@ export interface CommentProps {
 
 export const Comment: FC<CommentProps> = ({item, imgId, imgSrc}) => {
   const {deletePost, refetchPosts} = usePost();
+  const [modalVisible, setModalVisible] = useState(false);
   const handleDelete = async () => {
-    await deletePost({
+    deletePost({
       variables: {
-        id: item.id,
-        img_source: imgSrc,
+        deletePostId: item.id,
+        imgSource: imgSrc,
       },
     });
+
     refetchPosts({img_id: imgId});
   };
-  console.log(imgSrc, item, imgId);
+  const handleEdit = () => {
+    setModalVisible(true);
+  };
 
   const handleDeletePost = () => {
     Alert.alert('Delete Post', 'Are you sure you want to delete this post?', [
@@ -38,7 +43,10 @@ export const Comment: FC<CommentProps> = ({item, imgId, imgSrc}) => {
     <View style={styles.containerPost}>
       <View style={[styles.content, styles.shadow]}>
         <View style={styles.avatar} />
-        <Text>{item.post}</Text>
+        <View>
+          <Text style={styles.name}>{item.user_name}</Text>
+          <Text style={styles.post}>{item.post}</Text>
+        </View>
       </View>
       <View style={styles.delete}>
         <TouchableOpacity activeOpacity={0.8} onPress={handleDeletePost}>
@@ -51,10 +59,17 @@ export const Comment: FC<CommentProps> = ({item, imgId, imgSrc}) => {
             }}
           />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8}>
+        <TouchableOpacity activeOpacity={0.8} onPress={handleEdit}>
           <Icon name="create-outline" size={20} color="yellow" />
         </TouchableOpacity>
       </View>
+      <EditModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        item={item}
+        imgSrc={imgSrc}
+        refetchPosts={refetchPosts}
+      />
     </View>
   );
 };
@@ -95,5 +110,12 @@ const styles = StyleSheet.create({
   delete: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  name: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  post: {
+    fontSize: 14,
   },
 });

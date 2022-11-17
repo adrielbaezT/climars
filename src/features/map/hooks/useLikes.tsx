@@ -1,8 +1,12 @@
 import {useLazyQuery, useMutation} from '@apollo/client';
 import {userVar} from 'graphql';
-import {useEffect} from 'react';
 import {ADD_LIKE, DELETE_LIKE, GET_LIKE} from '../graphql/queries';
-import {LikeData, LikesResponse, LikeVars} from '../interfaces/LikesInterfaces';
+import {
+  GetLikeResponse,
+  GetLikesVars,
+  LikeData,
+  LikeVars,
+} from '../interfaces/LikesInterfaces';
 
 export const useLikes = () => {
   const token = userVar()?.token;
@@ -45,7 +49,7 @@ export const useLikes = () => {
       called: calledLikes,
       refetch: refetchLikes,
     },
-  ] = useLazyQuery<LikesResponse, LikeVars>(GET_LIKE, {
+  ] = useLazyQuery<GetLikeResponse, GetLikesVars>(GET_LIKE, {
     context: {
       headers: {
         authorization: `Bearer ${token}`,
@@ -56,15 +60,26 @@ export const useLikes = () => {
   const requestLikes = async (id: number) => {
     if (calledLikes) {
       await refetchLikes({
-        img_id: id,
+        imgId: id,
       });
     }
     await getLikes({
       variables: {
-        img_id: id,
+        imgId: id,
       },
     });
   };
 
-  return {addLike, deleteLike, requestLikes, data_like_get};
+  return {
+    addLike,
+    deleteLike,
+    requestLikes,
+    getLikes,
+    refetchLikes,
+    data_like_get,
+    loading_like_get,
+    data_like_create,
+    error_like_create,
+    calledLikes,
+  };
 };

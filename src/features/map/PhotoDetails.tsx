@@ -1,44 +1,46 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {COLORS} from 'constants/theme';
 import {RootStackParamList} from 'navigation/StackNavigator';
-import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  Platform,
-  Dimensions,
-} from 'react-native';
+import React, {useEffect, useMemo} from 'react';
+import {TouchableOpacity, Text, View, Image, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import BottomSheet from '@gorhom/bottom-sheet';
 import {Comments} from './components';
+import {useLikes} from './hooks/useLikes';
+import {userVar} from 'graphql';
 // import {useLikes} from './hooks/useLikes';
 
 export const PhotoDetails = () => {
   const navigate = useNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'PhotoDetails'>>();
+  const {data_like_get, getLikes} = useLikes();
   const {img_src, id, sol} = route.params;
-  const [isLiked, setIsLiked] = useState(false);
+  useEffect(() => {
+    getLikes({
+      variables: {
+        imgId: id,
+      },
+    });
+  }, [getLikes, id]);
+  console.log(img_src, id, sol);
 
-  // Bottom Sheet
-  const bottomSheetRef = useRef<BottomSheet>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  // console.log(data_like_get);
+  //   if (loading_like_get) {
+  //   const isUserLiked = data_like_get?.getLikes.some(
+  //     like => like.str_userId === userVar()?.id,
+  //   );
+  //   console.log(data_like_get?.getLikes);
 
-  // variables
-  const platformDimension = Platform.OS === 'ios' ? 'screen' : 'window';
-  const {height: screenHeight} = Dimensions.get(platformDimension);
-  const snapPoints = useMemo(
-    () => [`${screenHeight * 0.4}%`, `${screenHeight * 0.5}%`],
-    [screenHeight],
-  );
+  //   console.log('isUserLiked', isUserLiked);
 
-  // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    bottomSheetRef.current?.snapToIndex(index);
-    setIsOpen(true);
-  }, []);
+  //   console.log({user: userVar()?.id, id});
+  // }
+  // console.log(loading_like_get);
+  // console.log(data_like_get);
+  const isUserLiked = useMemo(() => {
+    return data_like_get?.getLikes
+      ? data_like_get?.getLikes?.some(like => like.str_userId === userVar()?.id)
+      : false;
+  }, [data_like_get]);
 
   return (
     <View
@@ -59,9 +61,7 @@ export const PhotoDetails = () => {
           flexDirection: 'row',
           paddingHorizontal: 10,
         }}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => setIsLiked(prev => !prev)}>
+        <TouchableOpacity activeOpacity={0.8}>
           <View
             style={{
               flexDirection: 'row',
@@ -70,7 +70,7 @@ export const PhotoDetails = () => {
               marginRight: 10,
             }}>
             <Icon
-              name={isLiked ? 'heart' : 'heart-outline'}
+              name={isUserLiked ? 'heart' : 'heart-outline'}
               size={30}
               color={COLORS.red}
             />
@@ -78,13 +78,11 @@ export const PhotoDetails = () => {
               style={{
                 fontSize: 22,
               }}>
-              {isLiked ? 1 : 0}
+              {data_like_get?.getLikes?.length || 0}
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => handleSheetChanges(0)}>
+        <TouchableOpacity activeOpacity={0.8}>
           <View
             style={{
               flexDirection: 'row',
