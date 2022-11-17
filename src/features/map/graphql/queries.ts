@@ -66,6 +66,14 @@ export const DELETE_POST = gql`
   mutation DeletePost($deletePostId: Int, $imgSource: String) {
     deletePost(id: $deletePostId, img_source: $imgSource) {
       id
+    }
+  }
+`;
+
+export const EDIT_POST = gql`
+  mutation EditPost($editPostId: Int, $post: String, $imgSource: String) {
+    editPost(id: $editPostId, post: $post, img_source: $imgSource) {
+      id
       post
       str_photoId
       str_userId
@@ -76,23 +84,11 @@ export const DELETE_POST = gql`
   }
 `;
 
-export const EDIT_POST = gql`
-  mutation EditPost($id: Int, $post: String, $img_source: String) {
-    editPost(id: $id, post: $post, img_source: $img_source) {
-      post
+export const ADD_LIKE = gql`
+  mutation AddLike($imgId: Int, $imgSource: String) {
+    addLike(img_id: $imgId, img_source: $imgSource) {
       id
       str_userId
-      user_img
-      user_name
-      img_id
-    }
-  }
-`;
-
-export const ADD_LIKE = gql`
-  mutation AddLike($sol: Int, $img_id: Int, $img_source: String) {
-    addLike(sol: $sol, img_id: $img_id, img_source: $img_source) {
-      id
     }
   }
 `;
@@ -107,9 +103,10 @@ export const GET_LIKE = gql`
 `;
 
 export const DELETE_LIKE = gql`
-  mutation DeleteLike($img_id: Int, $img_source: String) {
-    deleteLike(img_id: $img_id, img_source: $img_source) {
+  mutation DeleteLike($imgId: Int, $imgSource: String) {
+    deleteLike(img_id: $imgId, img_source: $imgSource) {
       id
+      str_userId
     }
   }
 `;
