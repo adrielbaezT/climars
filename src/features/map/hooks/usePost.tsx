@@ -1,6 +1,11 @@
 import {useLazyQuery, useMutation} from '@apollo/client';
 import {userVar} from 'graphql';
-import {CREATE_POST, DELETE_POST, GET_POSTS} from '../graphql/queries';
+import {
+  CREATE_POST,
+  DELETE_POST,
+  EDIT_POST,
+  GET_POSTS,
+} from '../graphql/queries';
 import {PostData, PostVars} from '../interfaces/PostInterfaces';
 
 export const usePost = () => {
@@ -63,6 +68,17 @@ export const usePost = () => {
     },
   });
 
+  const [
+    editPost,
+    {loading: loading_post_edit, error: error_post_edit, data: data_post_edit},
+  ] = useMutation(EDIT_POST, {
+    context: {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
+  });
+
   return {
     data_posts,
     error_posts,
@@ -70,6 +86,16 @@ export const usePost = () => {
     requestPosts,
     refetchPosts,
     deletePost,
+    loading_post_delete,
+    error_post_delete,
     createPost,
+    editPost,
+    loading_post_create,
+    error_post_create,
+    loading_post_edit,
+    error_post_edit,
+    data_post_create,
+    data_post_edit,
+    data_post_delete,
   };
 };
