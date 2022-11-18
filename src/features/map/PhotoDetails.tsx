@@ -12,35 +12,58 @@ import {userVar} from 'graphql';
 export const PhotoDetails = () => {
   const navigate = useNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'PhotoDetails'>>();
-  const {data_like_get, getLikes} = useLikes();
+  const {data_like_get, getLikes, addLike, deleteLike, refetchLikes} =
+    useLikes();
   const {img_src, id, sol} = route.params;
+
   useEffect(() => {
     getLikes({
       variables: {
         imgId: id,
       },
     });
-  }, [getLikes, id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   console.log(img_src, id, sol);
-
-  // console.log(data_like_get);
-  //   if (loading_like_get) {
-  //   const isUserLiked = data_like_get?.getLikes.some(
-  //     like => like.str_userId === userVar()?.id,
-  //   );
-  //   console.log(data_like_get?.getLikes);
-
-  //   console.log('isUserLiked', isUserLiked);
-
-  //   console.log({user: userVar()?.id, id});
-  // }
-  // console.log(loading_like_get);
-  // console.log(data_like_get);
+  console.log(data_like_get);
   const isUserLiked = useMemo(() => {
-    return data_like_get?.getLikes
-      ? data_like_get?.getLikes?.some(like => like.str_userId === userVar()?.id)
-      : false;
+    return data_like_get?.getLikes.some(
+      like => like.str_userId === userVar()?.id,
+    );
   }, [data_like_get]);
+  const handleAddLike = async () => {
+    await addLike({
+      variables: {
+        imgId: id,
+        imgSource: img_src,
+      },
+    });
+
+    await refetchLikes({
+      imgId: id,
+    });
+  };
+
+  const handleDeleteLike = async () => {
+    await deleteLike({
+      variables: {
+        imgId: id,
+        imgSource: img_src,
+      },
+    });
+    await refetchLikes({
+      imgId: id,
+    });
+  };
+
+  const handleLike = async () => {
+    console.log(isUserLiked);
+    if (isUserLiked) {
+      await handleDeleteLike();
+    } else {
+      await handleAddLike();
+    }
+  };
 
   return (
     <View
@@ -61,7 +84,7 @@ export const PhotoDetails = () => {
           flexDirection: 'row',
           paddingHorizontal: 10,
         }}>
-        <TouchableOpacity activeOpacity={0.8}>
+        <TouchableOpacity activeOpacity={0.8} onPress={handleLike}>
           <View
             style={{
               flexDirection: 'row',
