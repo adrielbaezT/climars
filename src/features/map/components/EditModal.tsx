@@ -10,6 +10,7 @@ import {
   Pressable,
   View,
   TextInput,
+  Keyboard,
 } from 'react-native';
 import * as yup from 'yup';
 import {usePost} from '../hooks/usePost';
@@ -48,6 +49,7 @@ export const EditModal: FC<EditModalProps> = ({
   const {editPost} = usePost();
 
   const onSubmit = (data: PostData) => {
+    Keyboard.dismiss();
     Alert.alert('Edit Post', 'Are you sure you want to edit this post?', [
       {
         text: 'Cancel',
@@ -104,7 +106,7 @@ export const EditModal: FC<EditModalProps> = ({
           <Pressable
             style={[styles.button, styles.buttonClose]}
             onPress={handleSubmit(onSubmit)}>
-            <Text style={styles.textStyle}>Hide Modal</Text>
+            <Text style={styles.textStyle}>Done</Text>
           </Pressable>
         </View>
       </View>
@@ -141,12 +143,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    width: '100%',
   },
   buttonOpen: {
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: COLORS.primary,
   },
   textStyle: {
     color: 'white',
