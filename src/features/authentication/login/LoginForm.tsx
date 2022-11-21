@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  Switch,
-  Alert,
-} from 'react-native';
+import {View, TouchableOpacity, Image, StyleSheet, Alert} from 'react-native';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useNavigation} from '@react-navigation/native';
@@ -16,10 +8,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {RootStackParamList} from 'navigation/StackNavigator';
 import {loginSchema} from './validations/loginSchema';
 import {onBoardingVar, userVar} from 'graphql';
-import {COLORS, SIZES} from 'constants/theme';
+import {COLORS} from 'constants/theme';
 import {InputLogin} from 'components/form';
 import axios from 'axios';
 import {User} from './interfaces/User';
+import {Button} from 'components/buttton';
+import {RememberMe} from './components/RememberMe';
 
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 type LoginData = {
@@ -104,37 +98,11 @@ export default function LoginForm() {
           </View>
         }
       />
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginVertical: 10,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <Switch
-            value={toggleCheckBox}
-            onValueChange={newValue => setToggleCheckBox(newValue)}
-          />
-          <Text style={{color: COLORS.gray, fontSize: SIZES.h3, padding: 10}}>
-            {' '}
-            Remember Me
-          </Text>
-        </View>
-        <Text style={{color: COLORS.purple, fontSize: SIZES.h3}}>
-          Forgot Password?
-        </Text>
-      </View>
-      <TouchableOpacity
-        style={styles.appButtonContainer}
-        activeOpacity={0.9}
-        onPress={handleSubmit(handleLogin)}>
-        <Text style={styles.appButtonText}>Login</Text>
-      </TouchableOpacity>
+      <RememberMe
+        toggleCheckBox={toggleCheckBox}
+        setToggleCheckBox={setToggleCheckBox}
+      />
+      <Button title="Login" handleOnPress={handleSubmit(handleLogin)} />
     </View>
   );
 }
