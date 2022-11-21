@@ -16,8 +16,6 @@ export const Comment: FC<CommentProps> = ({item, imgId, imgSrc}) => {
   const {deletePost, refetchPosts} = usePost();
   const [modalVisible, setModalVisible] = useState(false);
   const handleDelete = async () => {
-    console.log('delete post start', imgId);
-
     await deletePost({
       variables: {
         deletePostId: item.id,
@@ -26,7 +24,6 @@ export const Comment: FC<CommentProps> = ({item, imgId, imgSrc}) => {
     });
 
     await refetchPosts({img_id: imgId});
-    console.log('delete post end');
   };
   const handleEdit = () => {
     setModalVisible(true);

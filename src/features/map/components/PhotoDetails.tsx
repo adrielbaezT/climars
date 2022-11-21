@@ -4,9 +4,9 @@ import {RootStackParamList} from 'navigation/StackNavigator';
 import React, {useEffect, useMemo} from 'react';
 import {TouchableOpacity, Text, View, Image, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Comments} from './components';
-import {useLikes} from './hooks/useLikes';
 import {userVar} from 'graphql';
+import {useLikes} from '../hooks/useLikes';
+import {Comments} from './Comments';
 // import {useLikes} from './hooks/useLikes';
 
 export const PhotoDetails = () => {
@@ -23,12 +23,13 @@ export const PhotoDetails = () => {
       },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  console.log(img_src, id, sol);
-  console.log(data_like_get);
+  }, [id]);
+  // console.log(img_src, id, sol);
+  // console.log(data_like_get);
   const isUserLiked = useMemo(() => {
-    return data_like_get?.getLikes.some(
-      like => like.str_userId === userVar()?.id,
+    return (
+      data_like_get?.getLikes &&
+      data_like_get?.getLikes.some(like => like.str_userId === userVar()?.id)
     );
   }, [data_like_get]);
   const handleAddLike = async () => {
@@ -57,7 +58,6 @@ export const PhotoDetails = () => {
   };
 
   const handleLike = async () => {
-    console.log(isUserLiked);
     if (isUserLiked) {
       await handleDeleteLike();
     } else {

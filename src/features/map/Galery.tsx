@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Button} from 'components/buttton';
+import {IconButton} from 'components/buttton';
 import {COLORS} from 'constants/theme';
 import {
   ActivityIndicator,
@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useGetSol} from './hooks/useGetSol';
-import {Photo} from './Photo';
+import {Photo} from './components/Photo';
 
 export const Galery = () => {
   const {data, loading, getInitialData, nsol, currSol, setCurrSol, setNsol} =
@@ -35,6 +35,8 @@ export const Galery = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(nsol, currSol);
+
   if (loading || !data) {
     return (
       <View
@@ -56,7 +58,7 @@ export const Galery = () => {
       style={styles.container}>
       <View style={styles.gradient} />
       <View style={styles.changeSol}>
-        <Button
+        <IconButton
           handleOnPress={addNsol}
           textStyle={{
             color: 'white',
@@ -66,7 +68,7 @@ export const Galery = () => {
           }
         />
         <Text style={styles.title}>Sol Numero: {currSol}</Text>
-        <Button
+        <IconButton
           handleOnPress={subNsol}
           textStyle={{
             color: 'white',
@@ -78,8 +80,8 @@ export const Galery = () => {
       </View>
       <View style={styles.galery}>
         {data?.getPhotos.length === 0 ? (
-          <View>
-            <Text>No hay info</Text>
+          <View style={styles.containerNoInfo}>
+            <Text style={styles.text}>No hay info</Text>
           </View>
         ) : (
           <FlatList
@@ -123,6 +125,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  containerNoInfo: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
     color: 'white',
     fontSize: 30,
     fontWeight: 'bold',

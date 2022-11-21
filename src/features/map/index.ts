@@ -1,2 +1,2 @@
 export * from './Galery';
-export * from './PhotoDetails';
+export * from './components/PhotoDetails';
