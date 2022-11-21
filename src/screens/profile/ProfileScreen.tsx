@@ -14,6 +14,7 @@ import {COLORS} from 'constants/theme';
 import {RootStackParamList} from 'navigation/StackNavigator';
 import {userVar} from 'graphql';
 import {useDebouncedText} from 'hooks';
+import {Button} from 'components/buttton';
 
 const OPTIONS = [
   {
@@ -93,6 +94,23 @@ export const ProfileScreen = () => {
           <Text style={styles.appButtonText}>Log out</Text>
           <Icon name="log-out-outline" size={25} color="white" />
         </TouchableOpacity>
+        <Button
+          title="Log out"
+          handleOnPress={() => {
+            userVar(null);
+            navigate('Login');
+          }}
+          appendComponent={
+            <Icon
+              name="log-out-outline"
+              size={25}
+              color="white"
+              style={{
+                marginLeft: 10,
+              }}
+            />
+          }
+        />
       </View>
     </View>
   );
