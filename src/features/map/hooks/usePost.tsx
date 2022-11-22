@@ -10,6 +10,7 @@ import {PostData, PostVars} from '../interfaces/PostInterfaces';
 
 export const usePost = () => {
   const token = userVar()?.token;
+
   const [
     getPosts,
     {

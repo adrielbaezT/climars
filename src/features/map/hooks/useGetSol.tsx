@@ -73,5 +73,8 @@ export const useGetSol = () => {
     currSol,
     setNsol,
     nsol,
+    loading_pages,
+    error_pages,
+    data_pages,
   };
 };

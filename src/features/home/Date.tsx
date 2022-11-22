@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import dayjs from 'dayjs';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Button} from 'components/buttton';
+import {IconButton} from 'components/buttton';
 dayjs.locale('es');
 
 export const Date = () => {
@@ -19,7 +19,7 @@ export const Date = () => {
 
   return (
     <View style={[styles.center, {flexDirection: 'row'}]}>
-      <Button
+      <IconButton
         handleOnPress={subDay}
         textStyle={{
           color: 'white',
@@ -41,7 +41,7 @@ export const Date = () => {
           {day === 0 ? dayjs().format('dddd Do') : null}
         </Text>
       </View>
-      <Button
+      <IconButton
         handleOnPress={addDay}
         textStyle={{
           color: 'white',

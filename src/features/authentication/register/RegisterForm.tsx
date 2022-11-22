@@ -16,6 +16,9 @@ import {InputRegister} from 'components/form';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from 'navigation/StackNavigator';
+import {useMutation} from '@apollo/client';
+import {REGISTER_USER} from '../graphql/queries';
+import {IRegisterUserVars, RegisterUserData} from '../interfaces';
 
 type RegisterData = {
   firstName: string;
@@ -32,6 +35,9 @@ export const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(true);
   const navigate = useNavigation<RegisterScreenProp>();
 
+  const [registerUser, {error: error_register, data: data_register}] =
+    useMutation<RegisterUserData, IRegisterUserVars>(REGISTER_USER);
+
   const {
     handleSubmit,
     control,
@@ -46,10 +52,33 @@ export const RegisterForm = () => {
     },
     resolver: yupResolver(registerSchema),
   });
-  const onSubmit = (data: RegisterData) => {
-    console.log(data);
-    reset();
-    navigate.navigate('VerifyEmailScreen');
+  const onSubmit = async (data: RegisterData) => {
+    const {firstName, lastName, email, password} = data;
+    console.log(
+      firstName,
+      lastName,
+      email,
+      password,
+      `${firstName} ${lastName}`,
+    );
+
+    await registerUser({
+      variables: {
+        firstName,
+        lastName,
+        email,
+        password,
+        name: `${firstName} ${lastName}`,
+      },
+    });
+
+    if (data_register && error_register === undefined) {
+      reset();
+      navigate.navigate('VerifyEmailScreen', {
+        email: data.email,
+        password: data.password,
+      });
+    }
   };
 
   return (

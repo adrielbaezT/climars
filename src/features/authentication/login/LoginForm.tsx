@@ -1,27 +1,15 @@
 import React, {useState} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  Switch,
-  Alert,
-} from 'react-native';
+import {View, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {RootStackParamList} from 'navigation/StackNavigator';
 import {loginSchema} from './validations/loginSchema';
-import {onBoardingVar, userVar} from 'graphql';
-import {COLORS, SIZES} from 'constants/theme';
+import {COLORS} from 'constants/theme';
 import {InputLogin} from 'components/form';
-import axios from 'axios';
-import {User} from './interfaces/User';
+import {Button} from 'components/buttton';
+import {RememberMe} from './components/RememberMe';
+import {useLogin} from '../hooks/useLogin';
 
-type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 type LoginData = {
   email: string;
   password: string;
@@ -42,28 +30,7 @@ export default function LoginForm() {
   });
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
-  const {navigate} = useNavigation<LoginScreenProp>();
-
-  const handleLogin = async (dataLogin: LoginData) => {
-    const {data} = await axios.post<User>(
-      'http://192.168.15.202:85/api/auth/login',
-      dataLogin,
-    );
-    if (!data) {
-      return Alert.alert('Error', 'Email or password incorrect');
-    }
-
-    userVar({...data});
-    if (!onBoardingVar()) {
-      return navigate('Home');
-    }
-    if (!toggleCheckBox) {
-      reset();
-      return navigate('OnBoardingScreen');
-    }
-
-    return navigate('OnBoardingScreen');
-  };
+  const {loginUser} = useLogin({toggleCheckBox, reset});
 
   return (
     <View>
@@ -104,37 +71,11 @@ export default function LoginForm() {
           </View>
         }
       />
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginVertical: 10,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <Switch
-            value={toggleCheckBox}
-            onValueChange={newValue => setToggleCheckBox(newValue)}
-          />
-          <Text style={{color: COLORS.gray, fontSize: SIZES.h3, padding: 10}}>
-            {' '}
-            Remember Me
-          </Text>
-        </View>
-        <Text style={{color: COLORS.purple, fontSize: SIZES.h3}}>
-          Forgot Password?
-        </Text>
-      </View>
-      <TouchableOpacity
-        style={styles.appButtonContainer}
-        activeOpacity={0.9}
-        onPress={handleSubmit(handleLogin)}>
-        <Text style={styles.appButtonText}>Login</Text>
-      </TouchableOpacity>
+      <RememberMe
+        toggleCheckBox={toggleCheckBox}
+        setToggleCheckBox={setToggleCheckBox}
+      />
+      <Button title="Login" handleOnPress={handleSubmit(loginUser)} />
     </View>
   );
 }

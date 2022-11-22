@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from 'components/buttton';
+import {IconButton} from 'components/buttton';
 import {COLORS} from 'constants/theme';
 import {StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -33,7 +33,7 @@ export const WeatherCard: React.FC<Props> = ({item}) => {
             <Text style={styles.text}>{item.weather}</Text>
             <Text style={styles.weatherText}>{item.status}</Text>
           </View>
-          <Button
+          <IconButton
             handleOnPress={() => console.log('pressed')}
             textStyle={{
               color: 'white',

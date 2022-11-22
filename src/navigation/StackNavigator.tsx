@@ -9,7 +9,10 @@ import {VerifyEmailScreen} from 'screens/auth/VerifyEmail';
 export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
-  VerifyEmailScreen: undefined;
+  VerifyEmailScreen: {
+    email: string;
+    password: string;
+  };
   Home: undefined;
   OnBoardingScreen: undefined;
   NewsDetails: {

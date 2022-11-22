@@ -4,43 +4,68 @@ import {RootStackParamList} from 'navigation/StackNavigator';
 import React, {useEffect, useMemo} from 'react';
 import {TouchableOpacity, Text, View, Image, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Comments} from './components';
-import {useLikes} from './hooks/useLikes';
 import {userVar} from 'graphql';
+import {useLikes} from '../hooks/useLikes';
+import {Comments} from './Comments';
 // import {useLikes} from './hooks/useLikes';
 
 export const PhotoDetails = () => {
   const navigate = useNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'PhotoDetails'>>();
-  const {data_like_get, getLikes} = useLikes();
+  const {data_like_get, getLikes, addLike, deleteLike, refetchLikes} =
+    useLikes();
   const {img_src, id, sol} = route.params;
+  console.log(userVar());
+
   useEffect(() => {
     getLikes({
       variables: {
         imgId: id,
       },
     });
-  }, [getLikes, id]);
-  console.log(img_src, id, sol);
-
-  // console.log(data_like_get);
-  //   if (loading_like_get) {
-  //   const isUserLiked = data_like_get?.getLikes.some(
-  //     like => like.str_userId === userVar()?.id,
-  //   );
-  //   console.log(data_like_get?.getLikes);
-
-  //   console.log('isUserLiked', isUserLiked);
-
-  //   console.log({user: userVar()?.id, id});
-  // }
-  // console.log(loading_like_get);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   // console.log(data_like_get);
   const isUserLiked = useMemo(() => {
-    return data_like_get?.getLikes
-      ? data_like_get?.getLikes?.some(like => like.str_userId === userVar()?.id)
-      : false;
+    return (
+      data_like_get?.getLikes &&
+      data_like_get?.getLikes.some(like => like.str_userId === userVar()?.id)
+    );
   }, [data_like_get]);
+  const handleAddLike = async () => {
+    console.log(img_src, id, sol);
+    await addLike({
+      variables: {
+        imgId: id,
+        imgSource: img_src,
+        sol,
+      },
+    });
+
+    await refetchLikes({
+      imgId: id,
+    });
+  };
+
+  const handleDeleteLike = async () => {
+    await deleteLike({
+      variables: {
+        imgId: id,
+        imgSource: img_src,
+      },
+    });
+    await refetchLikes({
+      imgId: id,
+    });
+  };
+
+  const handleLike = async () => {
+    if (isUserLiked) {
+      await handleDeleteLike();
+    } else {
+      await handleAddLike();
+    }
+  };
 
   return (
     <View
@@ -61,7 +86,7 @@ export const PhotoDetails = () => {
           flexDirection: 'row',
           paddingHorizontal: 10,
         }}>
-        <TouchableOpacity activeOpacity={0.8}>
+        <TouchableOpacity activeOpacity={0.8} onPress={handleLike}>
           <View
             style={{
               flexDirection: 'row',
