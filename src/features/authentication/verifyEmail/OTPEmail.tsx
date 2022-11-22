@@ -18,6 +18,7 @@ export const OTPEmail: React.FC<Props> = ({onOTPChange}) => {
         onCodeFilled={code => {
           onOTPChange(code);
         }}
+        keyboardType="default"
       />
     </View>
   );
