@@ -7,10 +7,17 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Alert,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from 'navigation/StackNavigator';
 import {useNavigation} from '@react-navigation/native';
+import {useLazyQuery} from '@apollo/client';
+import {GET_VALIDATION} from 'features/authentication/graphql/queries';
+import {
+  GetValidationData,
+  IGetValidationVars,
+} from 'features/authentication/interfaces';
 
 type VerifyEmailScreenProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -20,6 +27,27 @@ type VerifyEmailScreenProp = NativeStackNavigationProp<
 export const VerifyEmailScreen = () => {
   const navigate = useNavigation<VerifyEmailScreenProp>();
   const [otpCode, setOtpCode] = useState('');
+
+  const [getValidation] = useLazyQuery<GetValidationData, IGetValidationVars>(
+    GET_VALIDATION,
+  );
+
+  const handleVerify = async (code: string) => {
+    const val_res = await getValidation({
+      variables: {
+        code,
+      },
+    });
+
+    if (
+      val_res.data?.getValidation.bool &&
+      val_res.data?.getValidation.message === 'Validación exitosa'
+    ) {
+      navigate.navigate('Login');
+    } else {
+      Alert.alert('Error', 'Código de verificación incorrecto');
+    }
+  };
 
   return (
     <View
@@ -48,7 +76,7 @@ export const VerifyEmailScreen = () => {
           }}
           activeOpacity={0.9}
           disabled={otpCode.length < 6}
-          onPress={() => navigate.navigate('OnBoardingScreen')}>
+          onPress={() => handleVerify(otpCode.toLocaleLowerCase())}>
           <Text style={styles.appButtonText}>Verify</Text>
         </TouchableOpacity>
       </View>

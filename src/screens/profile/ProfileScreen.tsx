@@ -2,13 +2,7 @@ import React, {useMemo, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {OptionMenu} from 'features/profile';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import {Text, View, StyleSheet, TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS} from 'constants/theme';
 import {RootStackParamList} from 'navigation/StackNavigator';
@@ -84,16 +78,6 @@ export const ProfileScreen = () => {
           alignSelf: 'center',
           marginTop: 20,
         }}>
-        <TouchableOpacity
-          style={styles.appButtonContainer}
-          activeOpacity={0.9}
-          onPress={() => {
-            userVar(null);
-            navigate('Login');
-          }}>
-          <Text style={styles.appButtonText}>Log out</Text>
-          <Icon name="log-out-outline" size={25} color="white" />
-        </TouchableOpacity>
         <Button
           title="Log out"
           handleOnPress={() => {
