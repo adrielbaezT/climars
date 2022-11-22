@@ -15,6 +15,7 @@ export const PhotoDetails = () => {
   const {data_like_get, getLikes, addLike, deleteLike, refetchLikes} =
     useLikes();
   const {img_src, id, sol} = route.params;
+  console.log(userVar());
 
   useEffect(() => {
     getLikes({
@@ -24,7 +25,6 @@ export const PhotoDetails = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  // console.log(img_src, id, sol);
   // console.log(data_like_get);
   const isUserLiked = useMemo(() => {
     return (
@@ -33,10 +33,12 @@ export const PhotoDetails = () => {
     );
   }, [data_like_get]);
   const handleAddLike = async () => {
+    console.log(img_src, id, sol);
     await addLike({
       variables: {
         imgId: id,
         imgSource: img_src,
+        sol,
       },
     });
 

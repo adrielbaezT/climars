@@ -85,8 +85,8 @@ export const EDIT_POST = gql`
 `;
 
 export const ADD_LIKE = gql`
-  mutation AddLike($imgId: Int, $imgSource: String) {
-    addLike(img_id: $imgId, img_source: $imgSource) {
+  mutation AddLike($imgId: Int, $imgSource: String, $sol: Int) {
+    addLike(img_id: $imgId, img_source: $imgSource, sol: $sol) {
       id
       str_userId
     }

@@ -15,8 +15,16 @@ import {useGetSol} from './hooks/useGetSol';
 import {Photo} from './components/Photo';
 
 export const Galery = () => {
-  const {data, loading, getInitialData, nsol, currSol, setCurrSol, setNsol} =
-    useGetSol();
+  const {
+    data,
+    loading,
+    getInitialData,
+    nsol,
+    currSol,
+    setCurrSol,
+    setNsol,
+    loading_pages,
+  } = useGetSol();
   const addNsol = () => {
     setNsol(nsol - 1);
     setCurrSol(currSol - 1);
@@ -37,7 +45,7 @@ export const Galery = () => {
 
   console.log(nsol, currSol);
 
-  if (loading || !data) {
+  if (loading || !data || loading_pages) {
     return (
       <View
         style={{
