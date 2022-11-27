@@ -1,5 +1,5 @@
 import {InMemoryCache, makeVar} from '@apollo/client';
-import {User} from 'features/authentication/login/interfaces/User';
+import {User} from 'features/authentication/login';
 
 interface IUser extends User {}
 

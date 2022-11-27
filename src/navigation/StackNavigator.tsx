@@ -5,6 +5,7 @@ import {Login, Register} from 'screens/auth';
 import {NewsDetails, PhotoDetails} from 'features';
 import {OnBoardingScreen} from 'screens/onBoarding';
 import {VerifyEmailScreen} from 'screens/auth/VerifyEmail';
+import {UserAccount} from 'features/profile';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -29,6 +30,7 @@ export type RootStackParamList = {
     img_src: string;
     sol: number;
   };
+  UserAccount: undefined;
 };
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -44,6 +46,7 @@ export const StackNavigator = () => {
       <Stack.Screen name="Home" component={TabBarNavigator} />
       <Stack.Screen name="NewsDetails" component={NewsDetails} />
       <Stack.Screen name="PhotoDetails" component={PhotoDetails} />
+      <Stack.Screen name="UserAccount" component={UserAccount} />
     </Stack.Navigator>
   );
 };

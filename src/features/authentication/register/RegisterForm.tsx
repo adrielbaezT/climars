@@ -54,13 +54,6 @@ export const RegisterForm = () => {
   });
   const onSubmit = async (data: RegisterData) => {
     const {firstName, lastName, email, password} = data;
-    console.log(
-      firstName,
-      lastName,
-      email,
-      password,
-      `${firstName} ${lastName}`,
-    );
 
     await registerUser({
       variables: {

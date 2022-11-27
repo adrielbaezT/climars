@@ -7,6 +7,8 @@ interface Props {
   handleOnPress: () => void;
   textStyle?: any;
   appendComponent?: JSX.Element;
+  width?: number | string;
+  height?: number;
 }
 
 export const Button = ({
@@ -14,6 +16,8 @@ export const Button = ({
   handleOnPress,
   appendComponent,
   textStyle = COLORS.white,
+  width = '100%',
+  height = 40,
 }: Props) => {
   const animatedValue = new Animated.Value(1);
 
@@ -41,7 +45,13 @@ export const Button = ({
     <Animated.View style={[animatedStyle]}>
       <TouchableOpacity
         activeOpacity={0.9}
-        style={styles.appButtonContainer}
+        style={[
+          styles.appButtonContainer,
+          {
+            width,
+            height,
+          },
+        ]}
         onPress={handleOnPress}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}>
