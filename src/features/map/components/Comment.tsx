@@ -1,4 +1,5 @@
 import {COLORS} from 'constants/theme';
+import {userVar} from 'graphql';
 import React, {FC, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -39,6 +40,8 @@ export const Comment: FC<CommentProps> = ({item, imgId, imgSrc}) => {
       {text: 'OK', onPress: () => handleDelete()},
     ]);
   };
+
+  const isMyPost = item.str_userId === userVar()?.id;
   return (
     <View style={styles.containerPost}>
       <View style={[styles.content, styles.shadow]}>
@@ -48,19 +51,25 @@ export const Comment: FC<CommentProps> = ({item, imgId, imgSrc}) => {
           <Text style={styles.post}>{item.post}</Text>
         </View>
       </View>
-      <View style={styles.delete}>
+      <View
+        style={[
+          styles.delete,
+          {
+            display: isMyPost ? 'flex' : 'none',
+          },
+        ]}>
         <TouchableOpacity activeOpacity={0.8} onPress={handleDeletePost}>
           <Icon
             name="trash-outline"
             size={20}
-            color={COLORS.red}
+            color={COLORS.black}
             style={{
               marginRight: 10,
             }}
           />
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.8} onPress={handleEdit}>
-          <Icon name="create-outline" size={20} color="yellow" />
+          <Icon name="create-outline" size={20} color={COLORS.black} />
         </TouchableOpacity>
       </View>
       <EditModal

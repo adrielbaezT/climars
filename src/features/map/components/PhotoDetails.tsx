@@ -15,7 +15,6 @@ export const PhotoDetails = () => {
   const {data_like_get, getLikes, addLike, deleteLike, refetchLikes} =
     useLikes();
   const {img_src, id, sol} = route.params;
-  console.log(userVar());
 
   useEffect(() => {
     getLikes({
@@ -33,7 +32,6 @@ export const PhotoDetails = () => {
     );
   }, [data_like_get]);
   const handleAddLike = async () => {
-    console.log(img_src, id, sol);
     await addLike({
       variables: {
         imgId: id,

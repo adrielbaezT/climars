@@ -43,8 +43,6 @@ export const Galery = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(nsol, currSol);
-
   if (loading || !data || loading_pages) {
     return (
       <View
