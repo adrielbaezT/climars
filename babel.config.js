@@ -19,6 +19,7 @@ module.exports = {
           assets: './src/assets/',
           hooks: './src/hooks',
           api: './src/api',
+          data: './src/data',
         },
       },
     ],
