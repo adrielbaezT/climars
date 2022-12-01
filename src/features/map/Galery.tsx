@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {IconButton} from 'components/buttton';
-import {COLORS} from 'constants/theme';
+import {COLORS, SIZES} from 'constants/theme';
 import {
   ActivityIndicator,
   Alert,
@@ -57,50 +57,73 @@ export const Galery = () => {
   }
 
   return (
-    <ImageBackground
-      source={{
-        uri: 'https://mars.nasa.gov/msl-raw-images/msss/01000/mcam/1000MR0044631290503689E01_DXXX.jpg',
-      }}
-      style={styles.container}>
-      <View style={styles.gradient} />
-      <View style={styles.changeSol}>
-        <IconButton
-          handleOnPress={addNsol}
-          textStyle={{
-            color: 'white',
-          }}
-          appendComponent={
-            <Icon name="chevron-back-outline" size={29} color="white" />
-          }
-        />
-        <Text style={styles.title}>Sol Numero: {currSol}</Text>
-        <IconButton
-          handleOnPress={subNsol}
-          textStyle={{
-            color: 'white',
-          }}
-          appendComponent={
-            <Icon name="chevron-forward-outline" size={29} color="white" />
-          }
-        />
-      </View>
-      <View style={styles.galery}>
-        {data?.getPhotos.length === 0 ? (
-          <View style={styles.containerNoInfo}>
-            <Text style={styles.text}>No hay info</Text>
+    <>
+      <View
+        style={{
+          width: '100%',
+          backgroundColor: COLORS.primary,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <ImageBackground
+          source={require('assets/img/bg.jpg')}
+          style={styles.bg}>
+          <View style={styles.changeSol}>
+            <IconButton
+              handleOnPress={addNsol}
+              textStyle={{
+                color: 'white',
+              }}
+              appendComponent={
+                <Icon name="chevron-back-outline" size={29} color="white" />
+              }
+            />
+            <Text style={styles.title}>Sol Numero: {currSol}</Text>
+            <IconButton
+              handleOnPress={subNsol}
+              textStyle={{
+                color: 'white',
+              }}
+              appendComponent={
+                <Icon name="chevron-forward-outline" size={29} color="white" />
+              }
+            />
           </View>
-        ) : (
+        </ImageBackground>
+      </View>
+      {data?.getPhotos.length === 0 ? (
+        <View style={styles.containerNoInfo}>
+          <Text style={styles.text}>
+            No hay fotos para este sol, intenta con otro
+          </Text>
+        </View>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: COLORS.red,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
           <FlatList
             data={data?.getPhotos}
             keyExtractor={item => item.id.toString()}
-            horizontal
+            numColumns={3}
             renderItem={({item}) => (
-              <Photo item={item} width={251} height={251} />
+              <Photo
+                item={item}
+                width={SIZES.width / 3}
+                height={SIZES.width / 3}
+                marginBottom={2}
+                marginLeft={2}
+                marginRight={2}
+                marginTop={2}
+              />
             )}
           />
-        )}
-      </View>
-    </ImageBackground>
+        </View>
+      )}
+    </>
   );
 };
 
@@ -127,8 +150,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    marginBottom: 20,
   },
   title: {
     color: 'white',
@@ -139,10 +160,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: COLORS.red,
   },
   text: {
     color: 'white',
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: 'bold',
+    textAlign: 'center',
+    paddingHorizontal: 20,
+  },
+  bg: {
+    width: '100%',
+    height: 150,
+    justifyContent: 'center',
   },
 });

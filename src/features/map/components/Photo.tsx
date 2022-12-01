@@ -21,9 +21,21 @@ interface Props {
   item: SolItem;
   width?: number;
   height?: number;
+  marginTop?: number;
+  marginBottom?: number;
+  marginLeft?: number;
+  marginRight?: number;
 }
 
-export const Photo: React.FC<Props> = ({item, width, height}) => {
+export const Photo: React.FC<Props> = ({
+  item,
+  width,
+  height,
+  marginBottom,
+  marginLeft,
+  marginRight,
+  marginTop,
+}) => {
   const {navigate} = useNavigation<PhotoScreenProp>();
   return (
     <TouchableOpacity
@@ -31,7 +43,15 @@ export const Photo: React.FC<Props> = ({item, width, height}) => {
       onPress={() => {
         navigate('PhotoDetails', item);
       }}>
-      <View style={{width, height, marginRight: 10}}>
+      <View
+        style={{
+          width,
+          height,
+          marginTop,
+          marginLeft,
+          marginBottom,
+          marginRight,
+        }}>
         <FastImage
           style={{width, height}}
           source={{
