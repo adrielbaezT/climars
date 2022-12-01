@@ -6,14 +6,18 @@ interface TitleProps {
   title: string;
   fontSize?: number;
   color?: string;
+  marginBottom?: number;
+  marginTop?: number;
 }
 export const Title: FC<TitleProps> = ({
   title,
   fontSize = 30,
   color = COLORS.black,
+  marginBottom = 20,
+  marginTop = 20,
 }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {marginBottom, marginTop}]}>
       <Text
         style={[
           styles.title,
